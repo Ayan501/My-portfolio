@@ -9,7 +9,7 @@ interface Project {
   description: string;
   images: string[];
   techStack: string[];
-  githubUrl: string;
+  githubUrl?: string;
   badge?: string;
 }
 
@@ -46,7 +46,8 @@ export function ProjectsSection() {
     {
       title: "Credit Card Fraud Detection",
       description:
-        "Developed a machine learning model to detect fraudulent credit card transactions by analyzing patterns and identifying suspicious activities.",      images: [
+        "Developed a machine learning model to detect fraudulent credit card transactions by analyzing patterns and identifying suspicious activities.",
+      images: [
         "https://images.unsplash.com/photo-1556740749-887f6717d7e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
         "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
       ],
@@ -58,7 +59,6 @@ export function ProjectsSection() {
         "REST API",
       ],
       githubUrl: "https://github.com/Ayan501/Credit-Card-Fraud-Detection",
-      badge: "",
     },
     {
       title: "RAG-Based AI Assistant",
@@ -69,7 +69,7 @@ export function ProjectsSection() {
         "https://images.unsplash.com/photo-1664526936810-ec0856d31b92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZXVyYWwlMjBuZXR3b3JrJTIwYXJjaGl0ZWN0dXJlJTIwZGlhZ3JhbXxlbnwxfHx8fDE3NzMwODY1NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       ],
       techStack: ["LangChain", "HuggingFace", "NLP", "Python"],
-      githubUrl: "#",
+      badge: "Private Repo",
     },
   ];
 
@@ -117,6 +117,7 @@ function ProjectCard({
   isInView: boolean;
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const hasGithubUrl = Boolean(project.githubUrl);
 
   return (
     <motion.div
@@ -129,7 +130,6 @@ function ProjectCard({
       }}
       className="bg-[#1F2937] rounded-2xl overflow-hidden border border-[#7C3AED]/30 hover:border-[#7C3AED] transition-all duration-300 group"
     >
-      {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
         <motion.div
           whileHover={{ scale: 1.08 }}
@@ -144,7 +144,6 @@ function ProjectCard({
           <div className="absolute inset-0 bg-gradient-to-t from-[#1F2937] to-transparent opacity-60"></div>
         </motion.div>
 
-        {/* Badge */}
         {project.badge && (
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -156,7 +155,6 @@ function ProjectCard({
           </motion.div>
         )}
 
-        {/* Image Indicators */}
         {project.images.length > 1 && (
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
             {project.images.map((_, idx) => (
@@ -164,17 +162,15 @@ function ProjectCard({
                 key={idx}
                 onClick={() => setCurrentImageIndex(idx)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  idx === currentImageIndex
-                    ? "bg-[#7C3AED] w-6"
-                    : "bg-white/50"
+                  idx === currentImageIndex ? "bg-[#7C3AED] w-6" : "bg-white/50"
                 }`}
+                aria-label={`Show image ${idx + 1} for ${project.title}`}
               />
             ))}
           </div>
         )}
       </div>
 
-      {/* Content Section */}
       <div className="p-6">
         <h3 className="text-2xl font-bold text-[#FFFFFF] mb-3 group-hover:text-[#7C3AED] transition-colors duration-300">
           {project.title}
@@ -183,7 +179,6 @@ function ProjectCard({
           {project.description}
         </p>
 
-        {/* Tech Stack */}
         <div className="flex flex-wrap gap-2 mb-6">
           {project.techStack.map((tech, idx) => (
             <span
@@ -195,29 +190,37 @@ function ProjectCard({
           ))}
         </div>
 
-        {/* CTA Buttons */}
         <div className="flex space-x-4">
-          <motion.a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex-1 bg-gradient-to-r from-[#7C3AED] to-[#06B6D4] text-white px-4 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:shadow-lg hover:shadow-[#7C3AED]/50 transition-all duration-300"
-          >
-            <Github size={20} />
-            <span>View on GitHub</span>
-          </motion.a>
-          <motion.a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-4 py-3 border-2 border-[#06B6D4] text-[#06B6D4] rounded-lg font-semibold flex items-center justify-center hover:bg-[#06B6D4]/10 transition-all duration-300"
-          >
-            <ExternalLink size={20} />
-          </motion.a>
+          {hasGithubUrl ? (
+            <>
+              <motion.a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex-1 bg-gradient-to-r from-[#7C3AED] to-[#06B6D4] text-white px-4 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:shadow-lg hover:shadow-[#7C3AED]/50 transition-all duration-300"
+              >
+                <Github size={20} />
+                <span>View on GitHub</span>
+              </motion.a>
+              <motion.a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-4 py-3 border-2 border-[#06B6D4] text-[#06B6D4] rounded-lg font-semibold flex items-center justify-center hover:bg-[#06B6D4]/10 transition-all duration-300"
+                aria-label={`Open ${project.title} repository`}
+              >
+                <ExternalLink size={20} />
+              </motion.a>
+            </>
+          ) : (
+            <div className="flex-1 rounded-lg border border-[#06B6D4]/30 bg-[#0F1419] px-4 py-3 text-center text-sm font-medium text-[#A0AEC0]">
+              Repository not public yet
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUp, Heart } from "lucide-react";
 
 export function Footer() {
@@ -9,6 +9,7 @@ export function Footer() {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -29,17 +30,13 @@ export function Footer() {
     <footer className="bg-[#0A0E27] border-t border-[#00D9FF]/30 py-8 px-4 relative">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
           <div>
             <div className="text-2xl font-bold bg-gradient-to-r from-[#00D9FF] to-[#FF006E] bg-clip-text text-transparent mb-2">
               Ayan Mansoori
             </div>
-            <p className="text-[#A0AEC0] text-sm">
-              Data Scientist & ML Engineer
-            </p>
+            <p className="text-[#A0AEC0] text-sm">Data Scientist & ML Engineer</p>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-[#FFFFFF] font-semibold mb-4">Quick Links</h3>
             <div className="space-y-2">
@@ -59,11 +56,10 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Connect */}
           <div>
             <h3 className="text-[#FFFFFF] font-semibold mb-4">Connect</h3>
             <p className="text-[#A0AEC0] text-sm mb-4">
-              Let's work together on amazing projects!
+              Let&apos;s work together on amazing projects!
             </p>
             <a
               href="mailto:ayanmansuri535@gmail.com"
@@ -90,20 +86,15 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Copyright */}
         <div className="border-t border-[#00D9FF]/20 pt-6 text-center">
           <p className="text-[#A0AEC0] text-sm flex items-center justify-center">
-            © {new Date().getFullYear()} Ayan Mansoori. Made with{" "}
-            <Heart
-              size={14}
-              className="mx-1 text-[#FF006E] fill-current"
-            />{" "}
-            and lots of coffee
+            {"\u00A9"} {new Date().getFullYear()} Ayan Mansoori. Made with{" "}
+            <Heart size={14} className="mx-1 text-[#FF006E] fill-current" /> and
+            lots of coffee
           </p>
         </div>
       </div>
 
-      {/* Scroll to Top Button */}
       {showScrollTop && (
         <motion.button
           initial={{ opacity: 0, scale: 0 }}
@@ -116,6 +107,7 @@ export function Footer() {
           }}
           whileTap={{ scale: 0.9 }}
           className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-[#00D9FF] to-[#8338EC] rounded-full flex items-center justify-center shadow-lg z-50"
+          aria-label="Scroll to top"
         >
           <ArrowUp className="text-white" size={24} />
         </motion.button>

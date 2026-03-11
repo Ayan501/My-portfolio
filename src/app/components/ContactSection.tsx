@@ -29,7 +29,7 @@ export function ContactSection() {
     {
       icon: ExternalLink,
       label: "Portfolio",
-      url: "#",
+      url: "https://github.com/ayan501",
       color: "#F97316",
     },
   ];
@@ -40,7 +40,6 @@ export function ContactSection() {
       ref={ref}
       className="py-20 px-4 bg-gradient-to-b from-[#0A0E27] to-[#1A1F3A] relative overflow-hidden"
     >
-      {/* Animated Background */}
       <motion.div
         className="absolute inset-0 opacity-20"
         animate={{
@@ -86,8 +85,8 @@ export function ContactSection() {
             transition={{ duration: 0.8, delay: 1 }}
             className="text-xl text-[#F3F4F6] mb-12 max-w-2xl mx-auto"
           >
-            I'm always open to interesting projects and opportunities. Drop me a
-            message and let's connect!
+            I&apos;m always open to interesting projects and opportunities. Drop
+            me a message and let&apos;s connect!
           </motion.p>
 
           <motion.a
@@ -105,14 +104,18 @@ export function ContactSection() {
             Get In Touch
           </motion.a>
 
-          {/* Social Links */}
           <div className="flex justify-center space-x-6">
             {socialLinks.map((link, index) => {
               const Icon = link.icon;
+              const isExternal = link.url.startsWith("http");
+
               return (
                 <motion.a
                   key={index}
                   href={link.url}
+                  aria-label={link.label}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noreferrer" : undefined}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.5, delay: 1.8 + index * 0.1 }}
